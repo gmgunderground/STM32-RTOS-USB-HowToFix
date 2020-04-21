@@ -3,7 +3,7 @@ Some useful tips to survive on STM32 using RTOS and USB CDC device
 
 STM32CubeIDE and STM32CubeMX generates code for USB management that has **malloc** inside interrupt (bad practive) this can generate HEAP corrution, also some versions of FREERTOS have a buggy version of ```heap_4.c```
 
-1) If you use or don't use USB and you have problems with FREERTOS memory management may be the problem\
+1) If you use or don't use USB and you have problems with FREERTOS, memory management may be the problem\
 Try to use ```heap_useNewlib.c``` by Dave Nadler instead of ```\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c"heap_4.c```
 also take a look at http://www.nadler.com/embedded/newlibAndFreeRTOS.html for a very well explanation
 

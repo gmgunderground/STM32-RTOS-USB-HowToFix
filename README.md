@@ -3,15 +3,15 @@ Some useful tips to survive on STM32 using RTOS and USB CDC device
 
 STM32CubeIDE and STM32CubeMX generates code for USB management that has **malloc** inside interrupt (bad practive) this can generate HEAP corrution, also some versions of FREERTOS have a buggy version of ```heap_4.c```
 
-1) If you don't use USB and you have problems with FREERTOS\
-**Solution** : try to use ```heap_useNewlib.c``` by Dave Nadler instead of ```\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c"heap_4.c```
-also take a look at http://www.nadler.com/embedded/newlibAndFreeRTOS.html
+1) If you use or don't use USB and you have problems with FREERTOS memory management may be the problem\
+Try to use ```heap_useNewlib.c``` by Dave Nadler instead of ```\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c"heap_4.c```
+also take a look at http://www.nadler.com/embedded/newlibAndFreeRTOS.html for a very well explanation
 
-2) Inside ```sysmem.c``` there is a function ```caddr_t _sbrk(int incr)``` that should be used for **malloc** but is never actually called. Need to be investigated
+2) Try to increase HEAP and STAK inside .ld file or by CodeGeneratore. Put HEAP to 0x400 or more and Stack to 0x800 for example, but be free to try whai is best for you.
 
 3) USB code uses **malloc** inside interrupt, best is to replace malloc with a static struct. Look PDF **UM1734 STM32Cube™ USB device library** at point 6.7 Library footprint optimization, this will be a fist step to impruve the code.
 
-4) On Windows 10 there are many problems opening a VCP, this is because the driver returns a bad parameters of VCP configuration\
+4) On Windows 10 there are many problems opening a VCP, this is because the driver returns a bad parameters of VCP configuration, so in this situation the problem is not a memory management problem\
 In file ***usbd_cdc_if.c***, inside Private Variables section, declare\
 ```static uint8_t uartcfg[7] = {0,0,0,0,0,0,0};```\
 then inside function **CDC_Control_FS**
@@ -38,3 +38,5 @@ then inside function **CDC_Control_FS**
     break;
 ```
 this will prevent Windows 10 to take error opening CDC Virtual Com Port
+
+5) Inside ```sysmem.c``` there is a function ```caddr_t _sbrk(int incr)``` that should be used for **malloc** but is never actually called so I think something is changed in memory management. Need to be investigated if there is some new code improvements

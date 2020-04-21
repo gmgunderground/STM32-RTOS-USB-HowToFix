@@ -1,10 +1,12 @@
 # STM32-RTOS-USB-HowToFix
 Some useful tips to survive on STM32 using RTOS and USB CDC device 
 
-STM32CubeIDE and STM32CubeMX generates code for USB management that has **malloc** inside interrupt (bad practice) this can generate HEAP corrution, also some versions of FREERTOS have a buggy version of ```heap_4.c```
+After a week of wasting time around ST generated code I have solved many problems, below a collection of my experience to solve many issues. Remember that afetr many fixes, if you generate code again, you lost all patches and you have to start again.
+
+STM32CubeIDE and STM32CubeMX generates code for USB management that has **malloc** inside interrupt (bad practice) this can generate HEAP corrution, also some ST versions of FREERTOS doesn't manage memory correctly for a multithread enviroment.
 
 1) If you use or don't use USB and you have problems with FREERTOS, memory management may be the problem\
-Try to use ```heap_useNewlib.c``` by Dave Nadler instead of ```\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c"heap_4.c```
+Try to use ```heap_useNewlib.c``` by Dave Nadler instead of ```\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c```
 also take a look at http://www.nadler.com/embedded/newlibAndFreeRTOS.html for a very well explanation
 
 2) Try to increase HEAP and STAK inside .ld file or by CodeGeneratore. Put HEAP to 0x400 or more and Stack to 0x800 for example, but be free to try whai is best for you.

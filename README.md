@@ -1,7 +1,7 @@
 # STM32-RTOS-USB-HowToFix
 Some useful tips to survive on STM32 using RTOS and USB CDC device 
 
-After a week of wasting time around ST generated code I have solved many problems, below a collection of my experience to solve many issues. Remember that afetr many fixes, if you generate code again, you lost all patches and you have to start again.
+After a week of wasting time around ST generated code (for STM32H7) I have solved many problems, below a collection of my experience to solve many issues. Remember that afetr many fixes, if you generate code again, you lost all patches and you have to start again.
 
 STM32CubeIDE and STM32CubeMX generates code for USB management that has **malloc** inside interrupt (bad practice) this can generate HEAP corrution, also some ST versions of FREERTOS doesn't manage memory correctly for a multithread enviroment.
 

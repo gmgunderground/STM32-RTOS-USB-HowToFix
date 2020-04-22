@@ -7,7 +7,7 @@ STM32CubeIDE and STM32CubeMX generates code for USB management that has **malloc
 
 1) If you use or don't use USB and you have problems with FREERTOS, memory management may be the problem\
 Try to use ```heap_useNewlib.c``` by Dave Nadler instead of ```\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c```
-also take a look at http://www.nadler.com/embedded/newlibAndFreeRTOS.html for a very well explanation
+also take a look at http://www.nadler.com/embedded/newlibAndFreeRTOS.html for a very well explanation and also http://www.nadler.com/backups/20200111_draft2_STM_Cube_Issues_and_Workflow.html
 
 2) Try to increase HEAP and STAK inside .ld file or by CodeGeneratore. Put HEAP to 0x400 or more and Stack to 0x800 for example, but be free to try whai is best for you.
 
